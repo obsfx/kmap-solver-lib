@@ -1,6 +1,6 @@
 # kmap-solver-lib
 
-This is a utility function that is using in `kmap-solver` to solve Karnaugh Maps up to 4 variables.
+This is a utility function that is using in `kmap-solver` to solve `Karnaugh Maps` up to 4 variables.
 
 
 
@@ -14,7 +14,7 @@ npm i kmap-solver-lib
 
 ## usage
 
-`kmap-solver-lib` takes 3 parameters. //.....
+`kmap-solver-lib` takes 3 parameters and returns an object that holds `groups` and the simplified `expression`. 
 
 ```javascript
 type KMapCell = {
@@ -31,8 +31,6 @@ type KMapResult = {
 
 solve(variables: string[], minterms: number[], dontcares?: number[]): KMapResult;
 ```
-
-
 
 ```javascript
 const solve = require('kmap-solver-lib');
@@ -71,7 +69,5 @@ solve(variables, minterms);
     ],
     expression: `y' + x'z + xz'`
 }
-
-
+*/
 ```
-
