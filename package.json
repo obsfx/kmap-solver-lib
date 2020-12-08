@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "run": "DEV=true ts-node ./src/index.tsx",
-    "run-dt": "npx react-devtools",
+    "test": "npx ava",
     "inspect": "node --inspect -r ts-node/register ./src/index.tsx",
     "build": "tsc -b",
     "watch": "tsc -b --watch"
