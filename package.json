@@ -1,6 +1,6 @@
 {
   "name": "kmap-solver-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A utility function to solve karnaugh maps up to 4 variables",
   "main": "./dist/index.js",
   "scripts": {
