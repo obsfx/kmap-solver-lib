@@ -1,4 +1,4 @@
-type KMapGrayCode = {
+export type KMapGrayCode = {
   rows: string[];
   cols: string[];
 }
@@ -10,7 +10,17 @@ export type KMapCell = {
   col: number;
 }
 
-const KMapGrayCodes: Map<number, KMapGrayCode> = new Map([
+type Region = {
+  w: number;
+  h: number;
+}
+
+export type KMapResult = {
+  groups: KMapCell[][];
+  expression: string;
+}
+
+export const KMapGrayCodes: Map<number, KMapGrayCode> = new Map([
   [ 
     2, {
       rows: [ '0', '1' ], 
@@ -30,16 +40,6 @@ const KMapGrayCodes: Map<number, KMapGrayCode> = new Map([
     } 
   ]
 ]);
-
-type Region = {
-  w: number;
-  h: number;
-}
-
-export type KMapResult = {
-  groups: KMapCell[][];
-  expression: string;
-}
 
 const getKMap = (variables: string[]): KMapCell[][] => {
  let KMap: KMapCell[][] = []; 
@@ -196,7 +196,7 @@ const extract = (variables: string[], group: KMapCell[]): string => {
   return expression;
 }
 
-const solve = (variables: string[], minterms: number[], dontcares: number[] = []): KMapResult => {
+export const solve = (variables: string[], minterms: number[], dontcares: number[] = []): KMapResult => {
   const KMap: KMapCell[][] = getKMap(variables);
 
   const groups: KMapCell[][] = [];
@@ -233,9 +233,11 @@ const solve = (variables: string[], minterms: number[], dontcares: number[] = []
 
   return {
     groups,
-    expression: total_expression == '' ? '1' : expressions.join(' + ')
+    expression: total_expression == '' ? '1' : expressions.join('+')
   }
 }
 
-export default solve;
-module.exports = solve;
+module.exports = {
+  solve,
+  KMapGrayCodes
+}

@@ -1,4 +1,4 @@
-import solve, { KMapResult } from '../src'
+import { solve, KMapResult } from '../src'
 import test, { ExecutionContext } from 'ava';
 
 test('f(x, y) = 0,1,3', (t: ExecutionContext) => {
@@ -13,7 +13,7 @@ test('f(x, y) = 0,1,3', (t: ExecutionContext) => {
         { binary: '01', decimal: 1, row: 0, col: 1 }
       ]
     ],
-    expression: `x' + y`
+    expression: `x'+y`
   }
 
   t.deepEqual(solve(['x', 'y'], [0, 1, 3]), expected);
@@ -57,7 +57,7 @@ test('f(x, y, z) = 0,1,2,3,4,5,6', (t: ExecutionContext) => {
         { binary: '100', decimal: 4, row: 3, col: 0 }
       ]
     ],
-    expression: `y' + x' + z'`
+    expression: `y'+x'+z'`
   }
 
   t.deepEqual(solve(['x', 'y', 'z'], [0, 1, 2, 3, 4, 5, 6]), expected);
@@ -81,7 +81,7 @@ test('f(x, y, z) = 0,1,3,4,5,6', (t: ExecutionContext) => {
         { binary: '100', decimal: 4, row: 3, col: 0 }
       ]
     ],
-    expression: `y' + x'z + xz'`
+    expression: `y'+x'z+xz'`
   }
 
   t.deepEqual(solve(['x', 'y', 'z'], [0, 1, 3, 4, 5, 6]), expected);
@@ -119,7 +119,7 @@ test('f(a, b, c, d) = 0,4,12,8,5,13,9,15,2,6,14,10', (t: ExecutionContext) => {
         { binary: '1110', decimal: 14, row: 2, col: 3 }
       ]
     ],
-    expression: `d' + bc' + ac' + ab`
+    expression: `d'+bc'+ac'+ab`
   }
 
   t.deepEqual(solve(['a', 'b', 'c', 'd'], [0, 4, 12, 8, 5, 13, 9, 15, 2, 6, 14, 10]), expected);

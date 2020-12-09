@@ -49,25 +49,23 @@ const minterms = [0, 1, 3, 4, 5, 6];
 
 solve(variables, minterms);
 // output
-/*
-{
-    groups: [
-      [
-        { binary: '000', decimal: 0, row: 0, col: 0 },
-        { binary: '001', decimal: 1, row: 0, col: 1 },
-        { binary: '100', decimal: 4, row: 3, col: 0 },
-        { binary: '101', decimal: 5, row: 3, col: 1 }
-      ],
-      [
-        { binary: '011', decimal: 3, row: 1, col: 1 },
-        { binary: '001', decimal: 1, row: 0, col: 1 }
-      ],
-      [
-        { binary: '110', decimal: 6, row: 2, col: 0 },
-        { binary: '100', decimal: 4, row: 3, col: 0 }
-      ]
-    ],
-    expression: `y' + x'z + xz'`
-}
-*/
+//{
+//    groups: [
+//      [
+//        { binary: '000', decimal: 0, row: 0, col: 0 },
+//        { binary: '001', decimal: 1, row: 0, col: 1 },
+//        { binary: '100', decimal: 4, row: 3, col: 0 },
+//        { binary: '101', decimal: 5, row: 3, col: 1 }
+//      ],
+//      [
+//        { binary: '011', decimal: 3, row: 1, col: 1 },
+//        { binary: '001', decimal: 1, row: 0, col: 1 }
+//      ],
+//      [
+//        { binary: '110', decimal: 6, row: 2, col: 0 },
+//        { binary: '100', decimal: 4, row: 3, col: 0 }
+//      ]
+//    ],
+//    expression: `y'+x'z+xz'`
+//}
 ```
