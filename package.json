@@ -4,7 +4,6 @@
   "description": "A utility function to solve karnaugh maps up to 4 variables",
   "main": "./dist/index.js",
   "scripts": {
-    "run": "DEV=true ts-node ./src/index.tsx",
     "test": "npx ava",
     "inspect": "node --inspect -r ts-node/register ./src/index.tsx",
     "build": "tsc -b",

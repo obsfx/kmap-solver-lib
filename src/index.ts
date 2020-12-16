@@ -124,7 +124,7 @@ const generateRegions = (rowCount: number, colCount: number): Region[] => {
   });
 }
 
-const group = (decimal: number, terms: number[], KMap: KMapCell[][]): KMapCell[] => {
+const group = (decimal: number, terms: number[], KMap: KMapCell[][], termQueue: number[]): KMapCell[] => {
   const rowCount: number = KMap.length;
   const colCount: number = KMap[0].length;
 
@@ -162,15 +162,41 @@ const group = (decimal: number, terms: number[], KMap: KMapCell[][]): KMapCell[]
     return cells;
   }
 
-  for (let i: number = regions.length - 1; i > -1; i--) {
+  let composedGroups: KMapCell[][] = [ [ KMap[row][col] ] ];
+
+  for (let i: number = 0; i < regions.length; i++) {
     const { w, h } = regions[i];
 
     const cells: KMapCell[] | false = checkRegion(w, h);
 
-    if (cells) return cells;
+    if (!cells) continue;
+
+    if (cells.length > composedGroups[0].length) {
+      composedGroups = [ [ ...cells ] ];
+      continue;
+    }
+
+    if (cells.length == composedGroups[0].length) {
+      composedGroups = [ ...composedGroups, [ ...cells ] ];
+      continue;
+    }
   }
 
-  return [ KMap[row][col] ];
+  const groupsThatContainCellsGrouppedBefore: number[] = [];
+
+  for (let i: number = 0; i < composedGroups.length; i++) {
+    const cellsGrouppedBefore: KMapCell[] = composedGroups[i].filter((cell: KMapCell) => !termQueue.includes(cell.decimal));
+
+    if (cellsGrouppedBefore.length > 0) {
+      groupsThatContainCellsGrouppedBefore.push(i);
+    }
+  }
+
+  if (groupsThatContainCellsGrouppedBefore.length > 0 && groupsThatContainCellsGrouppedBefore.length != composedGroups.length) {
+    return composedGroups.filter((_, i: number) => !groupsThatContainCellsGrouppedBefore.includes(i))[0]
+  }
+
+  return composedGroups[0];
 }
 
 const extract = (variables: string[], group: KMapCell[]): string => {
@@ -212,28 +238,26 @@ export const solve = (variables: string[], minterms: number[], dontcares: number
       continue;
     }
 
-    let cells: KMapCell[] = group(term, minterms, KMap);
+    let cells: KMapCell[] = group(term, minterms, KMap, termQueue);
 
     if (dontcares.length > 0) {
-      const dc_cells: KMapCell[] = group(term, [...minterms, ...dontcares], KMap);
+      const dc_cells: KMapCell[] = group(term, [...minterms, ...dontcares], KMap, termQueue);
       if (dc_cells.length > cells.length) cells = dc_cells;
     }
 
     groups.push(cells);
 
-    cells.map((cell: KMapCell) => {
-      termQueue = termQueue.filter((_term: number) => _term != cell.decimal);
-    });
+    termQueue = termQueue.filter((term: number) => !cells.map((cell: KMapCell) => cell.decimal).includes(term));
 
     const expression: string = extract(variables, cells);
     expressions.push(expression);
   }
 
-  const total_expression: string = expressions.join(' + ');
+  const total_expression: string = expressions.join('+');
 
   return {
     groups,
-    expression: total_expression == '' ? '1' : expressions.join('+')
+    expression: total_expression == '' ? '1' : total_expression
   }
 }
 
